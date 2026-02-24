@@ -1,0 +1,71 @@
+base_model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+model_type: Qwen2ForCausalLM
+tokenizer_type: Qwen2Tokenizer
+
+load_in_8bit: false
+load_in_4bit: false    # IMPORTANT: Disable quantization for merging to get full precision weights
+strict: false
+
+datasets:
+  - path: bigcode/the-stack
+    data_files: "data/go/train-00000-of-*.parquet"
+    ds_type: parquet
+    field: content
+    type: completion
+    streaming: true
+    split: train
+
+# Adapter to merge
+adapter: qlora
+lora_model_dir: /workspace/output/qwen-1.5b-debug  # Path to the adapter we just trained
+
+# Output
+output_dir: /workspace/output/qwen-1.5b-merged   # Where to save the full merged model
+
+sequence_len: 2048
+sample_packing: false
+pad_to_sequence_len: true
+
+lora_r: 32
+lora_alpha: 64
+lora_dropout: 0.05
+lora_target_linear: true
+lora_target_modules:
+  - q_proj
+  - v_proj
+  - k_proj
+  - o_proj
+  - gate_proj
+  - down_proj
+  - up_proj
+
+gradient_accumulation_steps: 4
+micro_batch_size: 4
+num_epochs: 1
+optimizer: paged_adamw_8bit
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+group_by_length: false
+bf16: auto
+fp16:
+tf32: false
+
+gradient_checkpointing: true
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+logging_steps: 1
+xformers_attention:
+flash_attention: true
+
+warmup_steps: 5
+evals_per_epoch: 0
+eval_table_size:
+debug:
+deepspeed:
+weight_decay: 0.0
+fsdp:
+fsdp_config:
+special_tokens:

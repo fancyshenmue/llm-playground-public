@@ -1,0 +1,32 @@
+///@version=6
+strategy("Stochastic Strategy - Correct v6 Syntax", overlay=true)
+
+// ✅ CORRECT: Stochastic returns ONLY the K line (single value, NOT an array)
+// Syntax: ta.stoch(source, high, low, length) → series float
+stochK = ta.stoch(close, high, low, 14)
+
+// ✅ CORRECT: If you need D line, calculate it manually as SMA of K
+stochD = ta.sma(stochK, 3)
+
+// ✅ CORRECT: Pre-calculate conditions
+isOversold = stochK < 20
+isCrossAbove = ta.crossover(stochK, 20)
+
+// Entry: Stochastic crosses above 20 from oversold
+longCondition = isCrossAbove
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+
+// Exit: Stochastic enters overbought
+isOverbought = stochK > 80
+
+if isOverbought
+    strategy.close("Long")
+
+// Plot Stochastic
+plot(stochK, color=color.blue, title="Stochastic K")
+plot(stochD, color=color.orange, title="Stochastic D")
+hline(80, "Overbought", color=color.red, linestyle=hline.style_dashed)
+hline(20, "Oversold", color=color.green, linestyle=hline.style_dashed)
+hline(50, "Midline", color=color.gray, linestyle=hline.style_dotted)

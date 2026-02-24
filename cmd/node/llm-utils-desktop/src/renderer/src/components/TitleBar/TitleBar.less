@@ -1,0 +1,66 @@
+.title-bar {
+  height: 32px;
+  background-color: #1a1a1a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #969696;
+  font-size: 12px;
+  user-select: none;
+  border-bottom: 1px solid #333333;
+  z-index: 1000;
+
+  .title-bar-drag-region {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    -webkit-app-region: drag; // Standard Electron drag support
+
+    .app-icon {
+      margin-right: 8px;
+      display: flex;
+      align-items: center;
+      color: #007acc; // VS Code Blue
+    }
+
+    .app-title {
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  .window-controls {
+    display: flex;
+    height: 100%;
+    -webkit-app-region: no-drag;
+
+    .control-btn {
+      width: 46px;
+      height: 100%;
+      border: none;
+      background: transparent;
+      color: #969696;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      transition: background-color 0.1s;
+
+      &:hover {
+        background-color: #2d2d2d;
+        color: #fff;
+      }
+
+      &.close:hover {
+        background-color: #e81123;
+        color: #fff;
+      }
+
+      &:active {
+        opacity: 0.8;
+      }
+    }
+  }
+}

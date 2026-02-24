@@ -1,0 +1,48 @@
+# Pixi
+.pixi/
+!.pixi/config.toml
+
+# Go
+bin/
+obj/
+*.exe
+go.work
+cmd/go/llm-utils/llm-utils
+cmd/go/llm-utils/*.bash
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+.env
+.ipynb_checkpoints/
+
+# Node.js
+node_modules/
+dist/
+.next/
+out/
+build/
+.npm
+.eslintcache
+
+# Project Specific
+cmd/go/llm-utils/config.yaml
+cmd/py/llm-utils/config.yaml
+cmd/node/llm-utils-desktop/config.yaml
+images/*
+!images/.gitkeep
+output/*
+!output/.gitkeep
+dataset/*
+!dataset/.gitkeep
+cmd/go/llm-utils/dataset/*
+!cmd/go/llm-utils/dataset/.gitkeep
+documents/tmp/*
+!documents/tmp/.gitkeep
+
+# System
+.webui_secret_key
+.DS_Store
+Thumbs.db

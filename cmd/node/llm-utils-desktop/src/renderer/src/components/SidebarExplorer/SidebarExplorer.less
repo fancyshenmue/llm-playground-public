@@ -1,0 +1,125 @@
+.sidebar-explorer {
+    display: flex;
+    flex-direction: column;
+    color: #cccccc;
+    user-select: none;
+
+    .explorer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 11px;
+        font-weight: 600;
+        transition: background 0.2s;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+
+            .header-actions button {
+                opacity: 1;
+            }
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .header-actions {
+            button {
+                background: none;
+                border: none;
+                color: #888;
+                padding: 2px;
+                border-radius: 3px;
+                cursor: pointer;
+                opacity: 0;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #fff;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
+
+    .explorer-content {
+        display: flex;
+        flex-direction: column;
+        padding: 4px 0;
+
+        .empty-state,
+        .loading-state {
+            padding: 8px 24px;
+            font-size: 12px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .folder-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 24px;
+            cursor: pointer;
+            font-size: 13px;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.05);
+                color: #ffffff;
+            }
+
+            &.selected {
+                background: rgba(78, 201, 176, 0.1);
+                border-left-color: #4ec9b0;
+                color: #4ec9b0;
+            }
+
+            span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            &.dir svg {
+                color: #dcb67a; // VS Code folder color
+            }
+
+            &.file svg {
+                color: #858585; // VS Code file color
+            }
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+    }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

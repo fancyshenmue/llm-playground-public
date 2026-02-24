@@ -1,0 +1,54 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - type: bind
+        source: "/mnt/f/Docker/Mount/llm-playground/output"
+        target: /models
+        read_only: true
+      - type: bind
+        source: "./modelfiles"
+        target: /modelfiles
+        read_only: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    restart: unless-stopped
+    networks:
+      - llm-network
+
+  llama-cpp:
+    image: ghcr.io/ggml-org/llama.cpp:full
+    container_name: llama-cpp
+    volumes:
+      - type: bind
+        source: "/mnt/f/Docker/Mount/llm-playground/output"
+        target: /models
+    # Entrypoint to keep it alive for 'exec' or just use as a one-off runner
+    entrypoint: /bin/sh
+    command: -c "sleep infinity"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    networks:
+      - llm-network
+
+networks:
+  llm-network:
+    name: llm-network
+    driver: bridge
+
+volumes:
+  ollama_data:

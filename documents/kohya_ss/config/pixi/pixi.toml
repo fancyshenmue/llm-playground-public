@@ -1,0 +1,25 @@
+[workspace]
+name = "kohya_ss"
+version = "0.1.0"
+channels = ["pytorch", "nvidia", "conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "==3.10.11"
+pytorch = "==2.3.1"
+torchvision = "==0.18.1"
+pytorch-cuda = "==12.1"
+pip = ">=23.0"
+git = "*"
+
+[pypi-dependencies]
+# Install kohya requirements via pip (from requirements.txt)
+
+[tasks]
+install-deps = "pip install -r requirements.txt"
+tag = "python sd-scripts/finetune/tag_images_by_wd14_tagger.py"
+train = "python sd-scripts/train_network.py"
+
+[system-requirements]
+cuda = "12"
+

@@ -1,0 +1,85 @@
+[workspace]
+name = "comfyui"
+version = "0.1.0"
+description = "A powerful and modular stable diffusion GUI and backend"
+authors = ["Charles Hsu <fancyshenmue@gmail.com>"]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tasks]
+dev = "python main.py"
+test = "pytest tests/"
+test-unit = "pytest tests-unit/"
+
+[dependencies]
+python = ">=3.11,<3.13"
+pip = "*"
+
+# Core dependencies
+numpy = ">=1.25.0"
+pillow = "*"
+scipy = "*"
+tqdm = "*"
+psutil = "*"
+pyyaml = "*"
+
+# Deep learning utilities
+einops = "*"
+safetensors = ">=0.4.2"
+
+# Transformers and NLP
+transformers = ">=4.50.3"
+tokenizers = ">=0.13.3"
+sentencepiece = "*"
+
+# Web and async
+aiohttp = ">=3.11.8"
+yarl = ">=1.18.0"
+attrs = "*"
+aiohappyeyeballs = ">=2.5.0"
+aiosignal = ">=1.4.0"
+
+# Database
+alembic = "*"
+sqlalchemy = "*"
+
+# Configuration and validation
+pydantic = "~=2.0"
+pydantic-settings = "~=2.0"
+
+# Additional dependencies required by pypi packages
+filelock = "*"
+packaging = "*"
+idna = "*"
+certifi = "*"
+
+[pypi-options]
+extra-index-urls = ["https://download.pytorch.org/whl/cu121"]
+
+[pypi-dependencies]
+# PyTorch ecosystem with CUDA 12.1 support - specific versions for Python 3.12
+torch = "==2.5.1+cu121"
+torchvision = "==0.20.1+cu121"
+torchaudio = "==2.5.1+cu121"
+# Computer vision (needs to be in pypi to use same torch version)
+kornia = ">=0.7.1"
+# ComfyUI specific packages
+comfyui-frontend-package = "==1.36.14"
+comfyui-workflow-templates = "==0.8.4"
+comfyui-embedded-docs = "==0.4.0"
+torchsde = "*"
+spandrel = "*"
+comfy-kitchen = ">=0.2.6"
+# Video processing
+av = ">=14.2.0"
+opencv-python = "*"
+imageio-ffmpeg = "*"
+# Required for SQLAlchemy
+typing-extensions = ">=4.0"
+
+[feature.dev]
+dependencies = { pytest = "*", pytest-cov = "*" }
+
+[environments]
+default = []
+dev = ["dev"]

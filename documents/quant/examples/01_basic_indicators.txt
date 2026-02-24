@@ -1,0 +1,32 @@
+///@version=6
+strategy("Basic Indicators Example", overlay=true)
+
+// ✅ CORRECT: Moving Averages (simple variable assignment)
+fastMA = ta.sma(close, 10)
+slowMA = ta.sma(close, 50)
+
+// ✅ CORRECT: RSI (using ta. namespace)
+rsi = ta.rsi(close, 14)
+
+// ✅ CORRECT: ADX (array destructuring, no named parameters)
+[diPlus, diMinus, adx] = ta.dmi(14, 14)
+
+// ✅ CORRECT: Volume (direct variable, NOT ta.volume())
+volAvg = ta.sma(volume, 20)
+highVolume = volume > volAvg * 1.5
+
+// Entry Condition
+longCondition = ta.crossover(fastMA, slowMA) and rsi < 70 and adx > 25 and highVolume
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+
+// Exit Condition
+shortCondition = ta.crossunder(fastMA, slowMA)
+
+if shortCondition
+    strategy.close("Long")
+
+// Plot indicators
+plot(fastMA, color=color.blue, linewidth=2)
+plot(slowMA, color=color.red, linewidth=2)

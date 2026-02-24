@@ -1,0 +1,41 @@
+# --- LLM Python Utilities Configuration ---
+# Copy this file to config.yaml and update for your environment
+
+# --- Ollama Settings ---
+# Used for vision analysis and text generation
+ollama:
+  # Base API URL for Ollama (standard endpoint is http://127.0.0.1:11434)
+  api_url: "http://127.0.0.1:11434"
+  # Default model for standard chat/completions
+  base_model: "llama3.2"
+  # Default vision-capable model to use
+  vision_model: "llama3.2-vision:latest"
+  # Request timeout in seconds
+  timeout: 300
+
+# --- Stable Diffusion Forge Settings ---
+# Used for image generation automation
+forge:
+  # Base API URL for Forge (standard endpoint is /sdapi/v1)
+  api_url: "http://127.0.0.1:7861/sdapi/v1"
+  # Default SDXL base model to use
+  base_model: "Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors"
+  # Request timeout in seconds
+  timeout: 600
+
+# --- AnythingLLM RAG Settings ---
+# Primary storage for analysis results
+anythingllm:
+  # Base API URL for AnythingLLM (/api/v1)
+  api_url: "http://127.0.0.1:3001/api/v1"
+  # Your AnythingLLM API Key
+  api_key: "YOUR_ANYTHING_LLM_API_KEY_HERE"
+  # Target workspace slug
+  workspace_slug: "ai-image-research"
+
+# --- Local Path Configuration ---
+paths:
+  # Directory where manual image captures are stored
+  images_dir: "images"
+  # Directory for dataset curation
+  dataset_dir: "dataset"

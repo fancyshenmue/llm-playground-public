@@ -1,0 +1,28 @@
+///@version=6
+strategy("MACD Strategy - Correct v6 Syntax", overlay=false)
+
+// ✅ CORRECT: MACD with positional parameters (NOT named!)
+// Returns array: [macdLine, signalLine, histLine]
+[macdLine, signalLine, histLine] = ta.macd(close, 12, 26, 9)
+
+// ✅ CORRECT: Check histogram conditions (pre-calculated, not in if)
+isPositiveHist = histLine > 0
+isRisingHist = histLine > histLine[1]
+
+// Entry: MACD histogram positive and rising
+longCondition = isPositiveHist and isRisingHist
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+
+// Exit: MACD histogram turns negative
+exitCondition = histLine < 0
+
+if exitCondition
+    strategy.close("Long")
+
+// Plot MACD
+plot(macdLine, color=color.blue, title="MACD Line")
+plot(signalLine, color=color.orange, title="Signal Line")
+plot(histLine, color=histLine > 0 ? color.green : color.red, style=plot.style_histogram, title="Histogram")
+hline(0, color=color.gray, linestyle=hline.style_dashed)

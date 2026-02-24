@@ -1,0 +1,65 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    profiles:
+      - optional # Disabled by default, enable with: docker compose --profile optional up
+    ports:
+      - "3002:8080" # Changed from 3000 to avoid conflict with Onyx
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - open-webui_data:/app/backend/data
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    networks:
+      - llm-network
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    restart: always
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage:z
+    environment:
+      - QDRANT__SERVICE__GRPC_PORT=6334
+    networks:
+      - llm-network
+
+  anythingllm:
+    image: mintplexlabs/anythingllm:latest
+    container_name: anythingllm
+    ports:
+      - "3001:3001"
+    volumes:
+      - anythingllm_data:/app/server/storage
+    environment:
+      - OLLAMA_BASE_PATH=http://ollama:11434
+      - STORAGE_DIR=/app/server/storage
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    networks:
+      - llm-network
+
+networks:
+  llm-network:
+    name: llm-network
+    driver: bridge
+
+volumes:
+  ollama_data:
+  open-webui_data:
+  qdrant_data:
+  anythingllm_data:

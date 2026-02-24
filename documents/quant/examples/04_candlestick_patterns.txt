@@ -1,0 +1,42 @@
+///@version=6
+strategy("Candlestick Patterns - Manual Implementation", overlay=true)
+
+// ⚠️ IMPORTANT: ta.candlestick.* functions DO NOT EXIST in Pine Script!
+// You must manually code all candlestick patterns.
+
+// ✅ CORRECT: Bullish Engulfing Pattern (manual logic)
+bullishEngulfing = close > open and          // Current bar is bullish
+                   close[1] < open[1] and    // Previous bar is bearish
+                   close > open[1] and       // Current close above previous open
+                   open < close[1]           // Current open below previous close
+
+// ✅ CORRECT: Bearish Engulfing Pattern
+bearishEngulfing = close < open and          // Current bar is bearish
+                   close[1] > open[1] and    // Previous bar is bullish
+                   close < open[1] and       // Current close below previous open
+                   open > close[1]           // Current open above previous close
+
+// ✅ CORRECT: Hammer Pattern
+bodySize = math.abs(close - open)
+lowerWick = (close > open ? open : close) - low
+upperWick = high - (close > open ? close : open)
+hammer = lowerWick > bodySize * 2 and upperWick < bodySize
+
+// ✅ CORRECT: Doji Pattern
+doji = bodySize / (high - low) < 0.1
+
+// Entry on bullish patterns
+longCondition = bullishEngulfing or hammer
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+
+// Exit on bearish patterns
+shortCondition = bearishEngulfing
+
+if shortCondition
+    strategy.close("Long")
+
+// Visual markers
+plotshape(bullishEngulfing, style=shape.triangleup, location=location.belowbar, color=color.green, size=size.small)
+plotshape(bearishEngulfing, style=shape.triangledown, location=location.abovebar, color=color.red, size=size.small)

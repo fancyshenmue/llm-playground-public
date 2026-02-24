@@ -1,0 +1,395 @@
+.rank-container {
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1e1e;
+    color: #cccccc;
+    overflow: hidden;
+
+    .rank-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        flex: 1;
+        min-height: 0; // Critical for proper flex scrolling
+        overflow: hidden;
+    }
+
+    .rank-form,
+    .rank-monitor {
+        background-color: #252526;
+        border: 1px solid #3c3c3c;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0; // Critical for proper flex behavior
+
+        header {
+            padding: 20px 24px; // Significantly increased for prominent bar
+            background-color: #2d2d2d;
+            border-bottom: 1px solid #3c3c3c;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px; // Slightly larger font
+            font-weight: 600;
+            color: #e0e0e0;
+            flex-shrink: 0; // Prevent header from shrinking
+        }
+    }
+
+    .form-content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto; // Allow scrolling if content is too tall
+        flex: 1; // Take remaining space
+        min-height: 0;
+    }
+
+    .monitor-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0; // Critical for proper scrolling
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        label {
+            font-size: 12px;
+            color: #888;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            background-color: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            color: #cccccc;
+            font-size: 13px;
+            transition: border-color 0.2s;
+
+            &:focus {
+                outline: none;
+                border-color: #007acc;
+            }
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .file-selector {
+        display: flex;
+        gap: 8px;
+
+        input {
+            flex: 1;
+        }
+
+        button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            color: #cccccc;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: #444;
+                border-color: #555;
+            }
+        }
+    }
+
+    .select-wrapper {
+        position: relative;
+
+        select {
+            appearance: none;
+            padding-right: 36px;
+        }
+
+        .select-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+            pointer-events: none;
+        }
+    }
+
+    .actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .primary-btn {
+            background-color: #007acc;
+            color: white;
+            border: none;
+
+            &:hover {
+                background-color: #006bb3;
+            }
+        }
+
+        .danger-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+
+            &:hover {
+                background-color: #b71c1c;
+            }
+        }
+    }
+
+    .terminal {
+        background-color: #1e1e1e;
+        border-radius: 4px;
+        padding: 16px;
+        margin: 16px;
+        height: 300px; // Fixed height for terminal
+        overflow-y: auto;
+        font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace;
+        font-size: 12px;
+        border: 1px solid #333;
+        flex-shrink: 0; // Don't shrink terminal
+
+        .log-line {
+            line-height: 1.6;
+            margin-bottom: 4px;
+            color: #85c46c;
+        }
+    }
+
+    .progress-container {
+        margin: 0 16px 16px;
+        flex-shrink: 0; // Don't shrink progress bar
+
+        .progress-bar {
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 10px;
+
+            .progress-fill {
+                height: 100%;
+                background-color: #007acc;
+                transition: width 0.3s ease;
+            }
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+        }
+    }
+
+    .results-section {
+        margin: 0 16px 16px;
+        flex: 1; // Take remaining space
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: 0; // Critical for scrolling
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0; // Significantly increased
+            border-bottom: 1px solid #333;
+            margin-bottom: 12px;
+            font-size: 14px; // Slightly larger font
+            font-weight: 600;
+            color: #e0e0e0;
+            flex-shrink: 0; // Don't shrink header
+        }
+
+        .results-table-container {
+            flex: 1;
+            overflow-y: auto; // Allow table to scroll
+            min-height: 0;
+            max-height: 400px; // Limit table height to prevent overflow
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+
+            th {
+                text-align: left;
+                padding: 10px;
+                background-color: #1e1e1e;
+                border-bottom: 2px solid #333;
+                color: #888;
+                font-weight: 500;
+                position: sticky;
+                top: 0;
+            }
+
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #333;
+                color: #cccccc;
+            }
+
+            tr:hover {
+                background-color: #2d2d2d;
+            }
+
+            .rank-col {
+                width: 50px;
+                font-weight: 600;
+                color: #888;
+            }
+
+            .file-col {
+                font-family: monospace;
+                color: #007acc;
+            }
+
+            .score-col {
+                width: 70px;
+                text-align: center;
+            }
+
+            .reason-col {
+                color: #888;
+                line-height: 1.5;
+            }
+
+            .score-badge {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 12px;
+                font-size: 11px;
+                font-weight: 700;
+                background-color: #333;
+                color: #fff;
+            }
+
+            .score-10,
+            .score-9 {
+                background-color: #2e7d32;
+            }
+
+            .score-8,
+            .score-7 {
+                background-color: #1976d2;
+            }
+
+            .score-6,
+            .score-5 {
+                background-color: #f57c00;
+            }
+
+            .score-4,
+            .score-3,
+            .score-2,
+            .score-1 {
+                background-color: #d32f2f;
+            }
+        }
+    }
+
+    .icon-btn {
+        background: transparent;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+
+        &:hover {
+            background-color: #333;
+            color: #eee;
+        }
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 24px 0; // Further increased for very prominent bottom bar
+        border-top: 1px solid #333;
+        margin-top: 12px;
+        flex-shrink: 0;
+
+        .page-btn {
+            padding: 8px 16px; // Also increased button size
+            background-color: #333;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            color: #cccccc;
+            cursor: pointer;
+            font-size: 13px; // Slightly larger font
+            transition: all 0.2s;
+
+            &:hover:not(:disabled) {
+                background-color: #444;
+                border-color: #007acc;
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        .page-info {
+            font-size: 13px; // Slightly larger font
+            color: #888;
+        }
+    }
+}

@@ -1,0 +1,38 @@
+///@version=6
+strategy("Tiered Exits with R-Based Targets", overlay=true)
+
+// ✅ CORRECT: Track entry price for R-based calculations
+var float entryPrice = na
+
+// Entry condition
+maFast = ta.sma(close, 10)
+maSlow = ta.sma(close, 50)
+longCondition = ta.crossover(maFast, maSlow)
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+    entryPrice := close  // Store entry price
+
+// ✅ CORRECT: Tiered exits with profit in TICKS (not price!)
+if strategy.position_size > 0
+    // Calculate profit targets as percentage of entry price
+    profit1_5R = (entryPrice * 0.015)  // 1.5% price move (assuming 1% risk)
+    profit3R = (entryPrice * 0.03)     // 3% price move
+
+    // Convert to TICKS
+    profit1_5R_Ticks = math.round(profit1_5R / syminfo.mintick)
+    profit3R_Ticks = math.round(profit3R / syminfo.mintick)
+
+    // Exit 50% at 1.5R
+    strategy.exit("TP1", from_entry="Long",
+                  qty_percent=50,
+                  profit=profit1_5R_Ticks)
+
+    // Exit remaining 50% at 3R
+    strategy.exit("TP2", from_entry="Long",
+                  qty_percent=100,  // 100% of remaining position
+                  profit=profit3R_Ticks)
+
+// Plot
+plot(maFast, color=color.blue)
+plot(maSlow, color=color.red)

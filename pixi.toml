@@ -1,0 +1,82 @@
+[workspace]
+authors = ["Demo <demo@example.com>"]
+channels = ["pytorch", "nvidia", "conda-forge"]
+name = "llm-playground"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[environments]
+default = ["main"]
+webui = ["webui"]
+
+[tasks]
+# General tasks can stay here or move to features
+check-gpu = "python cmd/py/llm-utils/main.py check-gpu-status"
+py-choose = "python cmd/py/llm-utils/main.py choose-best"
+py-compare = "python cmd/py/llm-utils/main.py compare"
+py-gen-data = "python cmd/py/llm-utils/main.py gen-data"
+py-golden = "python cmd/py/llm-utils/main.py gen-golden"
+py-analyze = "python cmd/py/llm-utils/main.py analyze"
+py-sweep = "python cmd/py/llm-utils/main.py sweep"
+py-gen = "python cmd/py/llm-utils/main.py gen"
+
+# Go CLI tasks
+build-llm-utils = "CGO_ENABLED=0 go build -o ~/bin/llm-utils ./cmd/go/llm-utils"
+build-llm = "go build -o bin/llm-utils ./cmd/go/llm-utils"
+llm-chat = "go run ./cmd/go/llm-utils chat"
+llm-models = "go run ./cmd/go/llm-utils models"
+llm-install = "go build -o bin/llm-utils ./cmd/go/llm-utils"
+llm-gen = "go run ./cmd/go/llm-utils data-gen"
+llm-analyze = "go run ./cmd/go/llm-utils analyze"
+llm-rank = "go run ./cmd/go/llm-utils rank"
+
+# Node Desktop tasks
+desktop-install = "npm install --prefix cmd/node/llm-utils-desktop"
+desktop-dev = "npm run dev --prefix cmd/node/llm-utils-desktop"
+desktop-dev-nosandbox = "npm run dev --prefix cmd/node/llm-utils-desktop -- -- --no-sandbox"
+desktop-build = "npm run build --prefix cmd/node/llm-utils-desktop"
+
+# Verification tasks
+test-go = "go test ./..."
+test-node = "npm run lint --prefix cmd/node/llm-utils-desktop && npm run typecheck --prefix cmd/node/llm-utils-desktop"
+test = { depends-on = ["test-go", "test-node"] }
+
+[feature.main.activation]
+env = { GOMODCACHE = "$HOME/.pixi-go-mod-cache", GOPATH = "$HOME/.pixi-go-path" }
+
+[feature.main.dependencies]
+python = "==3.10.11"
+numpy = ">=1.26.0,<2"
+pandas = ">=2.0,<3"
+go = "1.24.*"
+nodejs = ">=20.12.0"
+pydantic = ">=2.0"
+langchain = ">=1.2.0,<2"
+pytorch = ">=2.4.0"
+pytorch-cuda = "==12.4"
+pillow = "*"
+nspr = "*"
+nss = "*"
+pango = "*"
+atk = "*"
+pyarrow = ">=16.1.0,<24"
+
+[feature.main.pypi-dependencies]
+ollama = ">=0.6.1, <0.7"
+typer = ">=0.12.0"
+rich = ">=13.0.0"
+pyyaml = ">=6.0.0"
+transformers = "*"
+mcp = "*"
+
+[feature.webui.dependencies]
+python = "3.11.*"
+
+[feature.webui.pypi-dependencies]
+open-webui = "*"
+
+[feature.webui.tasks]
+serve-webui = "open-webui serve"
+
+[system-requirements]
+cuda = "12"

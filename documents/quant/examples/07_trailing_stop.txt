@@ -1,0 +1,34 @@
+///@version=6
+strategy("ATR Trailing Stop - Correct Tick Conversion", overlay=true)
+
+// Parameters
+atrLength = input.int(14, "ATR Length")
+atrMultiplier = input.float(1.5, "ATR Multiplier")
+
+// Calculate ATR
+atr = ta.atr(atrLength)
+
+// ✅ CORRECT: Convert ATR to ticks (MANDATORY for trail_offset)
+// Pine Script requires trail_offset in TICKS, not price values
+trailOffsetTicks = math.round((atr * atrMultiplier) / syminfo.mintick)
+
+// Simple entry condition
+smaFast = ta.sma(close, 20)
+smaSlow = ta.sma(close, 50)
+longCondition = ta.crossover(smaFast, smaSlow)
+
+if longCondition
+    strategy.entry("Long", strategy.long)
+
+// ✅ CORRECT: Trailing stop with tick conversion
+// trail_price = reference price (usually close)
+// trail_offset = distance in TICKS (not price!)
+if strategy.position_size > 0
+    strategy.exit("Trailing Stop", from_entry="Long",
+                  trail_price=close,
+                  trail_offset=trailOffsetTicks)
+
+// Plot ATR and MAs
+plot(smaFast, color=color.blue)
+plot(smaSlow, color=color.red)
+plot(atr, color=color.purple, title="ATR", display=display.data_window)

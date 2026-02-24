@@ -1,0 +1,317 @@
+:root {
+    --activity-bar-bg: #333333;
+    --side-bar-bg: #252526;
+    --editor-bg: #1e1e1e;
+    --status-bar-bg: #007acc;
+    --text-main: #cccccc;
+    --text-active: #ffffff;
+    --border-color: #3c3c3c;
+    --accent-color: #007acc;
+    --hover-bg: #2a2d2e;
+    --input-bg: #3c3c3c;
+    --error-color: #f14c4c;
+    --warning-bg: #332b00;
+    --warning-text: #e2c08d;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html,
+#root {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--editor-bg);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Activity Bar */
+.activity-bar {
+    width: 50px;
+    flex-shrink: 0;
+    background-color: var(--activity-bar-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    gap: 4px;
+    z-index: 10;
+
+    .activity-item {
+        width: 50px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.4);
+        position: relative;
+        transition: color 0.2s;
+
+        &:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        &.active {
+            color: #ffffff;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background-color: #ffffff;
+            }
+        }
+    }
+}
+
+/* Side Bar */
+.side-bar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: var(--side-bar-bg);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+
+    header {
+        padding: 10px 20px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #858585;
+        letter-spacing: 0.5px;
+    }
+
+    .side-bar-section {
+        .section-title {
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: default;
+        }
+
+        .config-form {
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                label {
+                    font-size: 11px;
+                    color: #858585;
+                    text-transform: uppercase;
+                }
+
+                input,
+                select {
+                    background-color: var(--input-bg);
+                    border: 1px solid var(--border-color);
+                    color: #ccc;
+                    padding: 4px 8px;
+                    font-size: 12px;
+                    outline: none;
+                    border-radius: 2px;
+                    width: 100%;
+
+                    &:focus {
+                        border-color: var(--accent-color);
+                    }
+
+                    &:disabled {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    .side-bar-content {
+        flex: 1;
+        overflow-y: auto;
+
+        .side-bar-section.no-padding {
+            padding: 0;
+
+            .section-title {
+                padding: 10px 12px 5px 12px;
+            }
+        }
+    }
+}
+
+/* Web Mode Banner */
+.web-mode-banner {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    padding: 4px 20px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(226, 192, 141, 0.1);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Utils */
+.icon-button {
+    background: transparent;
+    border: none;
+    color: #858585;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+
+    &:hover:not(:disabled) {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+}
+
+.error-text {
+    color: var(--error-color);
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--editor-bg);
+    min-width: 0;
+
+    .content-header {
+        height: 35px;
+        background-color: var(--side-bar-bg);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--border-color);
+
+        .breadcrumb {
+            font-size: 12px;
+            color: #969696;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    .viewport {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.placeholder-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+    opacity: 0.3;
+}
+
+/* Status Bar */
+.status-bar {
+    height: 22px;
+    background-color: var(--status-bar-bg);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 12px;
+    flex-shrink: 0;
+
+    .status-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .status-left,
+    .status-right {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+.full-height {
+    flex: 1;
+    height: 100%;
+}

@@ -1,0 +1,105 @@
+# --- LLM Utils Desktop Configuration ---
+# Copy this file to config.yaml and update the paths for your environment
+
+# --- Application Settings ---
+app:
+  # The name of the desktop application
+  name: "LLM Utils Desktop"
+  # Current version
+  version: "1.0.0"
+
+# --- Path Configuration ---
+# All paths can use ${lora_project_root} for variable expansion
+paths:
+  # The root directory of the llm-playground repository
+  llm_playground_project_root: "/path/to/your/llm-playground"
+  # Base directory for all LoRA-related work
+  lora_project_root: "/path/to/your/LoRA_Project"
+  # Directory where raw generated images are stored
+  datasets_raw: "${lora_project_root}/datasets/raw"
+  # Directory for images that have been tagged
+  datasets_tagged: "${lora_project_root}/datasets/tagged"
+  # Source images for training
+  train_image_dir: "${lora_project_root}/image"
+  # Directory for training JSON/Toml configs
+  train_configs: "${lora_project_root}/configs"
+  # Output directory for trained .safetensors models
+  models_output: "${lora_project_root}/models"
+  # Directory for training logs (Tensorboard)
+  training_logs: "${lora_project_root}/logs"
+  # Directory for periodic training samples
+  training_samples: "${lora_project_root}/samples"
+
+# --- Kohya_ss Configuration ---
+# Integration with the kohya_ss training environment
+kohya:
+  # Absolute path to your kohya_ss folder
+  root_path: "/path/to/your/kohya_ss"
+  # Path to the virtual environment used by kohya_ss
+  venv_path: "${root_path}/venv"
+  # Relative paths to internal scripts from root_path
+  scripts:
+    train: "sd-scripts/sdxl_train_network.py"
+    tag: "sd-scripts/finetune/tag_images_by_wd14_tagger.py"
+
+# --- Ollama Settings ---
+# Used for vision analysis and text generation
+ollama:
+  # Base API URL for Ollama (standard endpoint is http://127.0.0.1:11434)
+  api_url: "http://127.0.0.1:11434"
+  # Default model for standard chat/completions
+  base_model: "llama3.2"
+  # Default vision-capable model to use
+  vision_model: "llama3.2-vision:latest"
+  # Supported providers list
+  providers:
+    - "ollama"
+
+# --- Stable Diffusion Forge Settings ---
+# Used for image generation automation
+forge:
+  # Base API URL for Forge (standard endpoint is /sdapi/v1)
+  api_url: "http://127.0.0.1:7861/sdapi/v1"
+  # Default SDXL base model to use
+  base_model: "Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors"
+  # List of models shown in the UI dropdown
+  available_models:
+    - "Juggernaut-XL_v9_RunDiffusionPhoto_v2.safetensors"
+    - "flux1-dev-fp8.safetensors"
+    - "animagineXLV31_v31.safetensors"
+  available_loras:
+    - "Example_Style_v1.safetensors"
+    - "Character_Detail_Slider.safetensors"
+
+# --- AnythingLLM RAG Settings ---
+# Primary storage for analysis results
+anythingllm:
+  # Base API URL for AnythingLLM (/api/v1)
+  api_url: "http://127.0.0.1:3001/api/v1"
+  # Your AnythingLLM API Key
+  api_key: "YOUR_API_KEY_HERE"
+  # Target workspace slug
+  workspace_slug: "ai-image-research"
+
+# --- Default UI Settings ---
+# Pre-filled values for various app views
+defaults:
+  datagen:
+    total_images: 10
+    output_root: "${datasets_raw}"
+
+  tag:
+    model: "WD v1.4 ConVNext V2"
+    general_threshold: 0.35
+    character_threshold: 0.35
+    batch_size: 1
+    max_workers: 2
+
+  train:
+    max_train_steps: 1600
+    batch_size: 1
+    learning_rate: 1.0
+
+  rank:
+    # Directory to scan for generated samples to rank
+    images_root: "${llm_playground_project_root}/output"

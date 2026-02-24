@@ -1,0 +1,35 @@
+services:
+  unsloth:
+    user: "0:0"
+    image: unsloth/unsloth:latest
+    container_name: unsloth
+    volumes:
+      - dataset:/workspace/dataset
+      - output:/workspace/output
+      - ./scripts:/workspace/scripts
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - HF_HOME=/workspace/dataset/.huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+    command: sleep infinity
+    shm_size: 16g
+
+volumes:
+  dataset:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${DATASET_PATH}"
+  output:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "${OUTPUT_PATH}"

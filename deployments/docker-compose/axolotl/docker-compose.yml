@@ -1,0 +1,35 @@
+services:
+  axolotl:
+    image: axolotlai/axolotl:main-latest
+    container_name: axolotl
+    volumes:
+      - dataset:/workspace/dataset
+      - output:/workspace/output
+      - ./configs:/workspace/configs
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - HF_HOME=/workspace/dataset/.huggingface
+      - PYTORCH_ALLOC_CONF=expandable_segments:True
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+    command: sleep infinity
+    shm_size: 16g
+
+volumes:
+  dataset:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/mnt/e/Docker/Mount/llm-playground/dataset"
+  output:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: "/mnt/f/Docker/Mount/llm-playground/output"
