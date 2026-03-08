@@ -15,18 +15,33 @@ This directory contains the setup for fine-tuning Qwen2.5-Coder models using [Un
     docker compose up -d
     ```
 
+## 📖 Documentation
+- [FINETUNING_GUIDE.md](./FINETUNING_GUIDE.md): Step-by-step workflow, memory optimizations, and continuity setup.
+- [METRICS.md](./METRICS.md): Professional interpretation of Loss, Grad Norm, and other training indicators.
+- [EVALUATION.md](./EVALUATION.md): Measuring model performance post-training.
+- [FLOW.md](./FLOW.md): Technical architecture of the Unsloth integration.
+
 ## Fine-tuning
 
-You can trigger the fine-tuning for different model sizes using the following commands from the `deployments/docker-compose/unsloth` directory:
+The fine-tuning process is now driven by a structured configuration file.
 
-### Qwen2.5-Coder-14B-Instruct
+### 1. Configure parameters
+Edit [deployments/docker-compose/unsloth/config.yaml](file:///home/fancyshenmue/dev/llm-playground/deployments/docker-compose/unsloth/config.yaml) to set:
+*   **Model**: Name, context length.
+*   **Hyperparameters**: Learning rate, LoRA rank (R), steps.
+*   **Datasets**: Languages (Go, Java, Rust, etc.) and sample counts.
+
+### 2. Execute Training
+Run the training script within the container:
 ```bash
-docker compose exec -e MODEL_NAME="Qwen/Qwen2.5-Coder-14B-Instruct" unsloth python /workspace/scripts/finetune.py
+docker compose exec unsloth python /workspace/scripts/finetune.py
 ```
 
-### Qwen2.5-Coder-32B-Instruct
+### 3. Quick Overrides (Optional)
+You can still override any YAML value via environment variables for quick tests:
 ```bash
-docker compose exec -e MODEL_NAME="Qwen/Qwen2.5-Coder-32B-Instruct" unsloth python /workspace/scripts/finetune.py
+# Override learning rate and steps without changing config.yaml
+docker compose exec -e LEARNING_RATE="1e-5" -e MAX_STEPS="500" unsloth python /workspace/scripts/finetune.py
 ```
 
 ## How it works

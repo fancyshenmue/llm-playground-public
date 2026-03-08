@@ -1,0 +1,32 @@
+# Unsloth Fine-tuning Configuration Example
+# Copy this to config.yaml and adjust as needed
+
+model:
+  name: "Qwen/Qwen2.5-Coder-14B-Instruct" # HuggingFace model path
+  load_in_4bit: true
+  max_seq_length: 1024 # Context window for training
+
+training:
+  lora_r: 32 # LoRA rank (8, 16, 32, 64)
+  learning_rate: 2e-4
+  max_steps: 2500
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  warmup_steps: 10
+  weight_decay: 0.01
+  optim: "adamw_8bit" # adamw_8bit, paged_adamw_8bit, etc.
+  seed: 3407
+
+dataset:
+  streaming: false # Set to true to avoid massive disk usage, false to use local cache
+  languages:
+    - "go"
+    - "python"
+    - "javascript"
+    - "typescript"
+  samples_per_lang: 10000 # Number of samples to pull from the-stack per language
+  shuffle_seed: 3407
+
+export:
+  quantization_method: "q4_k_m" # q4_k_m, q8_0, f16
+  output_dir: "/workspace/output"

@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: openclaw_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-openclaw}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-openclaw_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-openclaw}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - openclaw-network
+
+networks:
+  openclaw-network:
+    name: openclaw-network
+    driver: bridge
+
+volumes:
+  postgres_data:

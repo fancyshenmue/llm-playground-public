@@ -1,0 +1,125 @@
+[
+  {
+    "id": "go_interface_01",
+    "category": "Go",
+    "prompt": "Define a Go interface `Shape` with an `Area() float64` method. Then implement it for a `Circle` struct.",
+    "expected_keywords": ["interface", "Shape", "Area() float64", "struct", "Circle", "math.Pi"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "go_concurrency_02",
+    "category": "Go",
+    "prompt": "Write a Go program using `sync.WaitGroup` to wait for 3 goroutines that print 'Hello' to finish.",
+    "expected_keywords": ["sync.WaitGroup", "wg.Add", "wg.Done", "wg.Wait", "go func"],
+    "difficulty": "medium",
+    "verification_cmd": "go run",
+    "verification_script": "\nfunc main() {\n\t// Simple verification to ensure basic logic is present and compilable\n\tprintln(\"Verification: Code compiled and ran\")\n}\n"
+  },
+  {
+    "id": "go_error_01",
+    "category": "Go",
+    "prompt": "Write a Go function that reads a file and uses `errors.Is` to check if a specific error is `os.ErrNotExist`.",
+    "expected_keywords": ["errors.Is", "os.ErrNotExist", "if err !=", "return err"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "gin_auth_01",
+    "category": "Gin",
+    "prompt": "Create a Gin middleware that checks for an 'Authorization' header. If missing, return 401 Unauthorized.",
+    "expected_keywords": ["c.GetHeader", "Authorization", "c.AbortWithStatus", "401", "c.Next()"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "gin_validate_01",
+    "category": "Gin",
+    "prompt": "Define a Gin POST handler that binds a JSON body to a struct with URI and Required tags.",
+    "expected_keywords": ["c.ShouldBindJSON", "binding:\"required\"", "c.JSON", "http.StatusOK"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "ts_generic_01",
+    "category": "TypeScript",
+    "prompt": "Write a TypeScript generic function `identity<T>` that returns the argument it receives.",
+    "expected_keywords": ["function identity<T>", "arg: T", "return arg"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "ts_union_01",
+    "category": "TypeScript",
+    "prompt": "Create a TypeScript type `Numeric` that is a union of `number | string`. Write a function that accepts it.",
+    "expected_keywords": ["type Numeric =", "number | string", "typeof arg === 'string'"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "ts_react_context_01",
+    "category": "TypeScript",
+    "prompt": "Implement a React `ThemeContext` using `createContext` and a `useTheme` hook with TypeScript types.",
+    "expected_keywords": ["createContext", "useContext", "Provider", "interface", "ThemeContext"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "py_decorator_01",
+    "category": "Python",
+    "prompt": "Write a Python decorator `time_it` that measures the execution time of a function.",
+    "expected_keywords": ["import time", "@functools.wraps", "start_time", "end_time"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "py_list_comp_01",
+    "category": "Python",
+    "prompt": "Use a list comprehension to filter even numbers from a list and square them.",
+    "expected_keywords": ["[x**2 for x in", "if x % 2 == 0]"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "py_regex_01",
+    "category": "Python",
+    "prompt": "Write a Python function using `re` to extract all email addresses from a string.",
+    "expected_keywords": ["import re", "re.findall", "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"],
+    "difficulty": "medium",
+    "verification_cmd": "python",
+    "verification_script": "\nimport re\ndef test_verification():\n    sample = 'Contact: test@example.com, user.name@domain.co.uk'\n    # Attempt to find common function names or use the logic directly\n    emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}', sample)\n    assert len(emails) == 2, f'Expected 2 emails, found {len(emails)}'\n    print('Verification: Regex extraction works')\ntest_verification()\n"
+  },
+  {
+    "id": "go_ctx_01",
+    "category": "Go",
+    "prompt": "Write a Go function that takes a `context.Context` and listens for `ctx.Done()` with a select statement.",
+    "expected_keywords": ["context.Context", "select", "case <-ctx.Done()", "return ctx.Err()"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "gin_stream_01",
+    "category": "Gin",
+    "prompt": "Implement a Gin handler that streams a large file to the client.",
+    "expected_keywords": ["c.DataFromReader", "application/octet-stream"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "ts_async_01",
+    "category": "TypeScript",
+    "prompt": "Write an async function in TypeScript that fetches data from an API and handles errors with try-catch.",
+    "expected_keywords": ["async function", "await fetch", "try {", "catch (error)"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "py_pandas_02",
+    "category": "Python",
+    "prompt": "Given a Pandas DataFrame, group by 'category' and calculate the mean of 'price'.",
+    "expected_keywords": ["df.groupby", "'category'", ".mean()", "['price']"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "java_stream_01",
+    "category": "Java",
+    "prompt": "Write a Java method using the Stream API to filter a list of integers and keep only numbers greater than 10.",
+    "expected_keywords": [".stream()", ".filter", "n -> n > 10", ".collect"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "rust_ownership_01",
+    "category": "Rust",
+    "prompt": "Write a Rust function that takes ownership of a String and returns its length, then explain why the original string is no longer usable.",
+    "expected_keywords": ["fn ", "String", "len()", "ownership", "moved"],
+    "difficulty": "medium"
+  }
+]

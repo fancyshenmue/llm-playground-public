@@ -1,0 +1,20 @@
+[
+  {
+    "id": "py_regex_email",
+    "category": "Python",
+    "prompt": "Write a Python function to extract email addresses from a string.",
+    "expected_keywords": ["import re", "re.findall"],
+    "difficulty": "easy",
+    "verification_cmd": "python",
+    "verification_script": "import re\ndef test():\n    assert len(re.findall(r'\\S+@\\S+', 'test@example.com')) == 1\ntest()"
+  },
+  {
+    "id": "go_concurrency_wg",
+    "category": "Go",
+    "prompt": "Use sync.WaitGroup to wait for goroutines.",
+    "expected_keywords": ["sync.WaitGroup", "wg.Wait()"],
+    "difficulty": "medium",
+    "verification_cmd": "go run",
+    "verification_script": "func main() { println(\"Verification passed\") }"
+  }
+]

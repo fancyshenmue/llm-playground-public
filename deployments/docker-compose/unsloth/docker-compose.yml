@@ -7,9 +7,13 @@ services:
       - dataset:/workspace/dataset
       - output:/workspace/output
       - ./scripts:/workspace/scripts
+      - ./config.yaml:/workspace/config.yaml
     environment:
       - HF_TOKEN=${HF_TOKEN}
       - HF_HOME=/workspace/dataset/.huggingface
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+      # Hyperparameters are now primarily driven by config.yaml
+      # but can still be overridden via environment variables if needed.
     deploy:
       resources:
         reservations:

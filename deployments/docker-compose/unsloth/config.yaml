@@ -1,0 +1,42 @@
+model:
+  name: "Qwen/Qwen2.5-Coder-14B-Instruct"
+  load_in_4bit: true
+  max_seq_length: 1024
+
+training:
+  mode: "instruct" # Options: "raw" or "instruct"
+  lora_r: 64
+  resume: true
+  batch_size: 1
+  gradient_accumulation_steps: 8
+  warmup_steps: 10
+  weight_decay: 0.01
+  optim: "adamw_8bit"
+  seed: 3407
+  # Mode specific overrides
+  instruct:
+    learning_rate: 2e-5
+    max_steps: 2000
+  raw:
+    learning_rate: 1e-4
+    max_steps: 5000
+
+dataset:
+  streaming: false
+  instruct:
+    name: "sahil2801/code_instructions_120k"
+  raw:
+    name: "bigcode/the-stack"
+    languages:
+      - "go"
+      - "python"
+      - "javascript"
+      - "typescript"
+      - "java"
+      - "rust"
+    samples_per_lang: 15000
+  shuffle_seed: 3407
+
+export:
+  quantization_method: "q4_k_m"
+  output_dir: "/workspace/output"

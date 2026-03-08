@@ -12,6 +12,7 @@ from commands.vision import auto_choose_best, compare_epochs, analyze_and_store
 from commands.agent import test_telemetry
 from commands.generation import generate_training_data, generate_final_golden_ratio, weight_sweep, simple_gen, hybrid_quant_gen
 from commands.data import convert_parquet, view_parquet, analyze_tokens
+from commands.evaluation import runner
 
 app = typer.Typer(
     name="llm-py-utils",
@@ -144,6 +145,18 @@ def test_agent(
     Test the agent flow through the Arize Phoenix Proxy.
     """
     test_telemetry.main(prompt, model)
+
+@app.command()
+def evaluate(
+    model: str = typer.Option(None, "--model", "-m", help="Ollama model name"),
+    models: str = typer.Option(None, "--models", help="Comma-separated model names for A/B testing"),
+    eval_set: str = typer.Option(None, "--file", "-f", help="Path to eval_set.json"),
+    judge: str = typer.Option(None, "--judge", "-j", help="Model to use as LLM-as-a-Judge")
+):
+    """
+    Run evaluation suite against models and log results to Arize Phoenix.
+    """
+    runner.main(model=model, eval_set=eval_set, split_models=models, judge=judge)
 
 if __name__ == "__main__":
     app()

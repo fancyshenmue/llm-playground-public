@@ -13,7 +13,7 @@ services:
     volumes:
       - phoenix_data:/root/.phoenix
     networks:
-      - llm-network
+      - arize-network
 
   ollama-proxy:
     build: ./proxy
@@ -21,18 +21,40 @@ services:
     ports:
       - "11435:11435"
     environment:
-      - OLLAMA_URL=http://ollama:11434
+      - OLLAMA_URL=http://host.docker.internal:11434
       - PHOENIX_COLLECTOR_URL=http://phoenix:4317
       - SERVICE_NAME=ollama-proxy
+    volumes:
+      - ./proxy:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - phoenix
     networks:
-      - llm-network
+      - arize-network
+
+  lms-proxy:
+    build: ./proxy
+    container_name: lms_proxy
+    ports:
+      - "12345:11435"
+    environment:
+      - OLLAMA_URL=http://host.docker.internal:1234 # Windows Host LM Studio
+      - PHOENIX_COLLECTOR_URL=http://phoenix:4317
+      - SERVICE_NAME=lms-proxy
+    volumes:
+      - ./proxy:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - phoenix
+    networks:
+      - arize-network
 
 networks:
-  llm-network:
-    external: true
-    name: llm-network
+  arize-network:
+    name: arize-network
+    driver: bridge
 
 volumes:
   phoenix_data:
