@@ -39,3 +39,18 @@ paths:
   images_dir: "images"
   # Directory for dataset curation
   dataset_dir: "dataset"
+
+# --- Enterprise AutoCoder Settings ---
+# Used for LangGraph autonomous code generation agent
+autocoder:
+  planner_model: "gemma4:31b"
+  coder_model: "gemma4:26b"
+  evaluator_model: "qwen3.5:35b-a3b"
+
+# --- Observability Settings ---
+observability:
+  backend: "langfuse" # Options: langfuse, phoenix, both, none
+  langfuse:
+    secret_key: "sk-lf-..."
+    public_key: "pk-lf-..."
+    host: "http://localhost:3000"

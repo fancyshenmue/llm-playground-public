@@ -1,0 +1,2 @@
+- [x] Add `ollama-list` to `pixi.toml` to alias the `ollama list` command
+- [x] Update `documents/ollama/operations.md` extending the new task

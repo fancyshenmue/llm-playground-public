@@ -2,7 +2,7 @@
 authors = ["Demo <demo@example.com>"]
 channels = ["pytorch", "nvidia", "conda-forge"]
 name = "llm-playground"
-platforms = ["linux-64"]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
 version = "0.1.0"
 
 [environments]
@@ -20,7 +20,9 @@ py-analyze = "python cmd/py/llm-utils/main.py analyze"
 py-sweep = "python cmd/py/llm-utils/main.py sweep"
 py-gen = "python cmd/py/llm-utils/main.py gen"
 py-eval = "python cmd/py/llm-utils/main.py evaluate"
-
+py-benchmark = "python cmd/py/llm-utils/main.py benchmark"
+agent = "python cmd/py/llm-utils/main.py agent"
+autocoder = "python cmd/py/llm-utils/main.py autonomous"
 # Go CLI tasks
 build-llm-utils = "CGO_ENABLED=0 go build -o ~/bin/llm-utils ./cmd/go/llm-utils"
 build-llm = "go build -o bin/llm-utils ./cmd/go/llm-utils"
@@ -42,6 +44,22 @@ test-go = "go test ./..."
 test-node = "npm run lint --prefix cmd/node/llm-utils-desktop && npm run typecheck --prefix cmd/node/llm-utils-desktop"
 test = { depends-on = ["test-go", "test-node"] }
 
+# Frontend Lab Tasks
+lab-install = "npm install --prefix frontend/autocoder-lab"
+lab-dev = "npm run dev --prefix frontend/autocoder-lab"
+api-dev = "uvicorn lab_api.main:app --app-dir cmd/py/llm-utils --reload --port 8000"
+enterprise-api-dev = "uvicorn enterprise_api.main:app --app-dir cmd/py/llm-utils --reload --port 8001"
+
+# Ollama Daemon Tasks
+ollama-daemon-install = "bash scripts/ollama-daemon-install.sh"
+ollama-daemon-start = "launchctl load -w ~/Library/LaunchAgents/com.llmplayground.ollama.plist"
+ollama-daemon-stop = "launchctl unload -w ~/Library/LaunchAgents/com.llmplayground.ollama.plist"
+ollama-daemon-logs = "tail -f ~/.llm-playground/logs/ollama.log"
+ollama-list = "ollama list"
+ollama-academic-eval = "lm_eval --model local-chat-completions --model_args model=gemma4:26b,base_url=http://localhost:11434/v1/chat/completions --tasks gsm8k --limit 10 --apply_chat_template"
+ollama-run-31b = "ollama run gemma4:31b"
+ollama-run-26b = "ollama run gemma4:26b"
+
 [feature.main.activation]
 env = { GOMODCACHE = "$HOME/.pixi-go-mod-cache", GOPATH = "$HOME/.pixi-go-path" }
 
@@ -52,9 +70,7 @@ pandas = ">=2.0,<3"
 go = "1.24.*"
 nodejs = ">=20.12.0"
 pydantic = ">=2.0"
-langchain = ">=1.2.0,<2"
 pytorch = ">=2.4.0"
-pytorch-cuda = "==12.4"
 pillow = "*"
 nspr = "*"
 nss = "*"
@@ -62,13 +78,38 @@ pango = "*"
 atk = "*"
 pyarrow = ">=16.1.0,<24"
 
+[feature.main.target.linux-64.dependencies]
+pytorch-cuda = "==12.4"
+
 [feature.main.pypi-dependencies]
 ollama = ">=0.6.1, <0.7"
 typer = ">=0.12.0"
 rich = ">=13.0.0"
+prompt_toolkit = ">=3.0.0"
 pyyaml = ">=6.0.0"
 transformers = "*"
 mcp = "*"
+lm-eval = { version = "*", extras = ["api"] }
+arize-phoenix = "*"
+openinference-instrumentation-langchain = "*"
+fastapi = "*"
+uvicorn = "*"
+langgraph = "*"
+langchain = "*"
+langchain-core = "*"
+langchain-community = "*"
+langchain-ollama = "*"
+langchain-neo4j = "*"
+google-generativeai = ">=0.5.0"
+duckduckgo-search = "*"
+ddgs = "*"
+langgraph-checkpoint-postgres = "*"
+psycopg = {extras = ["binary"], version = "*"}
+psycopg-pool = "*"
+faker = "*"
+
+[feature.main.target.osx-arm64.dependencies]
+pillow = ">=10.0.0"
 
 [feature.webui.dependencies]
 python = "3.11.*"
@@ -81,3 +122,14 @@ serve-webui = "open-webui serve"
 
 [system-requirements]
 cuda = "12"
+macos = "14.0"
+
+[dependencies]
+ollama = ">=0.20.2,<0.21"
+tenacity = ">=9.1.4,<10"
+json-repair = ">=0.58.7,<0.59"
+
+[pypi-dependencies]
+langchain-mcp-adapters = ">=0.1.0"
+langchain-experimental = ">=0.0.42, <0.5"
+langfuse = ">=4.2.0, <5"

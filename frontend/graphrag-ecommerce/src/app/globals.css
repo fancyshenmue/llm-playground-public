@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+    /* Tailwind CSS v4 style Dark Theme */
+    --color-bg-body: #0F172A; /* slate-900 */
+    --color-bg-sidebar: #0B1120; /* Deepest slate */
+    --color-bg-card: #1E293B; /* slate-800 */
+    --color-bg-card-hover: #334155; /* slate-700 */
+    
+    --color-text-body: #94A3B8; /* slate-400 */
+    --color-text-heading: #F8FAFC; /* slate-50 */
+    --color-text-muted: #64748B; /* slate-500 */
+    
+    --color-accent: #38BDF8; /* sky-400 */
+    --color-accent-hover: #0EA5E9; /* sky-500 */
+    
+    --color-border: #1E293B; /* slate-800 */
+    --color-border-focus: #38BDF8; /* sky-400 */
+  
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-body);
+  background-color: var(--color-bg-body);
+  /* The subtle dotted grid pattern typical of modern dev docs */
+  background-image: radial-gradient(var(--color-bg-card) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-heading);
+  font-weight: 600;
+}
+
+/* Custom Webkit Scrollbar for Hacker Aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-sidebar); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-card); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted); 
+}
+
+/* Smooth Accordions */
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}

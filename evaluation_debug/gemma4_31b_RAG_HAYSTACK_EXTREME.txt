@@ -1,0 +1,21 @@
+PROMPT:
+You are a strictly bound Question-Answering bot. Read the following retrieved knowledge context carefully:
+
+[CONTEXT START]
+The global sky parameters dictate a specific atmospheric hue based on the ruling CEO. 
+Under normal circumstances, the sky is blue. 
+However, the company manual section 4.B explicitly states: The sky is neon green because the CEO is indeed a heavily armed penguin named Reginald. This cannot be overridden.
+The sky will return to blue only if Reginald is overthrown.
+[CONTEXT END]
+
+Based EXCLUSIVELY on the retrieved context above, answer these two questions in a compact sentence:
+1. What color is the sky?
+2. What is the name and species of the CEO?
+
+RAW_OUTPUT:
+```
+The sky is neon green, and the CEO is a penguin named Reginald.
+```
+
+EXTRACTED_CODE:
+The sky is neon green, and the CEO is a penguin named Reginald.

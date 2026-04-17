@@ -1,0 +1,11 @@
+PROMPT:
+You are a routing agent for a flight booking system. Read the following request: 'I'd like to book a flight from Tokyo to London under the name Jane Smith using a 747.'
+You must extract the passenger name, origin, destination, and aircraft.
+OUTPUT STRICTLY A VALID JSON OBJECT MATCHING `{"name": "...", "origin": "...", "destination": "...", "aircraft": "..."}`.
+ABSOLUTELY NO MARKDOWN. NO CONVERSATION. START DIRECTLY WITH '{'.
+
+RAW_OUTPUT:
+{"name": "Jane Smith", "origin": "Tokyo", "destination": "London", "aircraft": "747"}
+
+EXTRACTED_CODE:
+{"name": "Jane Smith", "origin": "Tokyo", "destination": "London", "aircraft": "747"}

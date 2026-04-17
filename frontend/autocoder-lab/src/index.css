@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-doc-bg: #0f172a; /* tailwind documentation dark bg */
+  --color-doc-border: #1e293b;
+  --color-doc-text: #94a3b8;
+  --color-doc-title: #f8fafc;
+  --color-doc-accent: #38bdf8;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-doc-bg);
+    color: var(--color-doc-text);
+  }
+}

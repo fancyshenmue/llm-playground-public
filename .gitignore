@@ -46,3 +46,5 @@ documents/tmp/*
 .webui_secret_key
 .DS_Store
 Thumbs.db
+scripts/ecommerce-graphrag/data/*
+!scripts/ecommerce-graphrag/data/.gitkeep

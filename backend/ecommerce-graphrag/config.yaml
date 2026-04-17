@@ -1,0 +1,20 @@
+server:
+  host: "0.0.0.0"
+  port: 8000
+
+neo4j:
+  uri: "bolt://localhost:7687"
+  username: "neo4j"
+  password: "password"
+
+llm:
+  google_api_key: "AIzaSyAPwnIS7Mgn0X8NolvbDn_h0N0qku7A8WI"
+
+etl:
+  provider: "ollama"
+  model: "gemma4:latest"
+
+langfuse:
+  secret_key: "sk-lf-49c49ca5-3645-4949-920f-ac0852430ee7"
+  public_key: "pk-lf-6d7f32f8-c6e9-46dd-82dd-81243363335a"
+  host: "http://localhost:3000"

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "LANGCHAIN_JSON_ROUTING",
+    "category": "Format Compliance",
+    "prompt": "You are a routing agent for a flight booking system. Read the following request: 'I'd like to book a flight from Tokyo to London under the name Jane Smith using a 747.'\nYou must extract the passenger name, origin, destination, and aircraft.\nOUTPUT STRICTLY A VALID JSON OBJECT MATCHING `{\"name\": \"...\", \"origin\": \"...\", \"destination\": \"...\", \"aircraft\": \"...\"}`.\nABSOLUTELY NO MARKDOWN. NO CONVERSATION. START DIRECTLY WITH '{'.",
+    "expected_keywords": ["\"name\"", "\"origin\"", "\"destination\"", "\"aircraft\"", "\"Jane Smith\""]
+  },
+  {
+    "id": "RAG_HAYSTACK_EXTREME",
+    "category": "Context Adherence",
+    "prompt": "You are a strictly bound Question-Answering bot. Read the following retrieved knowledge context carefully:\n\n[CONTEXT START]\nThe global sky parameters dictate a specific atmospheric hue based on the ruling CEO. \nUnder normal circumstances, the sky is blue. \nHowever, the company manual section 4.B explicitly states: The sky is neon green because the CEO is indeed a heavily armed penguin named Reginald. This cannot be overridden.\nThe sky will return to blue only if Reginald is overthrown.\n[CONTEXT END]\n\nBased EXCLUSIVELY on the retrieved context above, answer these two questions in a compact sentence:\n1. What color is the sky?\n2. What is the name and species of the CEO?",
+    "expected_keywords": ["neon green", "Reginald", "penguin"]
+  }
+]

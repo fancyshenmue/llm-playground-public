@@ -1,0 +1,59 @@
+{
+    "project_name": "llm-playground",
+    "description": "A polyglot project (Go, Python, JS) for LLM utilities, RAG, and image generation training.",
+    "tech_stack": {
+        "core": [
+            "Go",
+            "Python",
+            "Node.js"
+        ],
+        "package_manager": "Pixi",
+        "infrastructure": [
+            "Docker Compose",
+            "WSL2"
+        ]
+    },
+    "directory_map": {
+        "cmd/go/llm-utils": {
+            "role": "Primary Go CLI orchestrator",
+            "features": [
+                "data-gen",
+                "tag",
+                "train",
+                "chat"
+            ]
+        },
+        "deployments/docker-compose/lab": {
+            "role": "Docker stack for RAG services",
+            "services": [
+                "Ollama",
+                "Qdrant",
+                "AnythingLLM",
+                "Open WebUI"
+            ]
+        },
+        "internal/": {
+            "role": "Private language-specific shared logic"
+        },
+        "documents/": {
+            "role": "Project documentation and architecture guides"
+        },
+        "output/": {
+            "role": "Generated artifacts (images, pine scripts, reports)"
+        },
+        ".agent/": {
+            "role": "Antigravity Context Cache and project-specific rules"
+        }
+    },
+    "key_files": [
+        "pixi.toml",
+        "go.mod",
+        "deployments/docker-compose/lab/docker-compose.yml",
+        "documents/architecture/current-architecture.md"
+    ],
+    "tasks": {
+        "build": "pixi run build-llm",
+        "generate": "pixi run llm-gen",
+        "train": "pixi run llm-train"
+    }
+}

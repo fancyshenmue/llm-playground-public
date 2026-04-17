@@ -1,0 +1,13 @@
+{
+  "name": "graphrag-ecommerce-data-gen",
+  "version": "1.0.0",
+  "description": "Massive retail data generator for Phase 12",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-retail-data.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "data-generator-retail": "^5.14.5"
+  }
+}

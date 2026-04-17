@@ -29,7 +29,7 @@ def get_host_ip():
     return "127.0.0.1"
 
 HOST_IP = get_host_ip()
-OLLAMA_PROXY_URL = f"http://localhost:11435"
+OLLAMA_PROXY_URL = f"http://localhost:11434"
 LM_STUDIO_PROXY_URL = f"http://localhost:12345/v1"
 
 def call_llm(model: str, prompt: str, system: str = None, is_json: bool = False) -> str:

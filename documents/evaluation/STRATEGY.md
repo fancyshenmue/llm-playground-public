@@ -52,6 +52,16 @@ Enable qualitative scoring by specifying a judge model:
 pixi run py-eval -m qwen2.5-coder-14b-ft:latest --judge qwen2.5-coder:32b
 ```
 
+### 3.4 Arize Phoenix Telemetry (Agent & RAG Tracing)
+During Track B professional evaluation, or when building standalone RAG / LangChain Agent scripts, you can hook into the local Arize Phoenix visualizer to intercept internal logic:
+1. **Instrument Codebase**: Insert this trace layer at the head of your LangChain script:
+   ```python
+   from phoenix.trace.langchain import LangChainInstrumentor
+   LangChainInstrumentor().instrument()
+   ```
+2. **Visualize DAG**: Open `http://localhost:16006` to dissect reasoning chains.
+3. **Engine Port Note**: When testing natively via `runner.py` without the heavy Phoenix API proxy activated, ensure `OLLAMA_PROXY_URL` is set to `http://localhost:11434`.
+
 ## 4. Domain-Specific "Sanity Tests"
 
 We maintain a curated `eval_set.json` (15+ tasks) focusing on our stack's critical areas:

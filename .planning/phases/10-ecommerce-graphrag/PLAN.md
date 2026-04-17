@@ -1,0 +1,33 @@
+# Phase 10 Execution Plan
+
+- [x] 1. Create Neo4j Infrastructure
+  - [x] Create `deployments/docker-compose/neo4j/docker-compose.yml` to launch `neo4j:latest`.
+  - [x] Update root `Makefile` to include `make neo4j-up` and `make neo4j-down`.
+- [x] 2. Mock Data CLI Generator
+  - [x] Create directory `cmd/py/llm-utils` and define `requirements.txt`.
+  - [x] Implement a Click-based CLI in `cmd/py/llm-utils/cli.py` to seed 5 categories of ecommerce data into Neo4j using Cypher `MERGE` commands.
+- [x] 3. Backend API Service
+  - [x] Define `backend/requirements.txt` with `fastapi`, `langchain`, `neo4j`, etc.
+  - [x] Implement `backend/main.py` utilizing LangChain's `GraphCypherQAChain` connected to `ChatGoogleGenerativeAI`.
+  - [x] Create `backend/.env` securely mapped to the Google AI Studio Key.
+- [x] 4. Frontend UI Setup
+  - [x] Initialize Next.js project inside `frontend/graphrag-ecommerce`.
+  - [x] Override `globals.css` with the `ui-ux-pro-max` "Vibrant & Block-based" design system.
+  - [x] Build conversational React component (`page.tsx`) to send REST payloads and visualize Cypher output.
+- [x] 5. Documentation & Closure
+  - [x] Write E2E System Context (`10-CONTEXT.md`).
+  - [x] Generate System Architecture diagram (`architecture.md`).
+  - [x] Add Operational commands (`operations.md`).
+  - [x] Append references to `ROADMAP.md` and `STATE.md`.
+- [x] 6. Bug Fixes (in-progress verification)
+  - [x] Update `backend/main.py` ChatGoogleGenerativeAI model initialization from `gemini-1.5-flash` to `gemini-1.5-flash-latest` to resolve API versioning 404 errors.
+  - [x] Detected 2026 environment deprecation: `gemini-1.5-flash-latest` doesn't exist on this API Key. Migrated to `gemini-flash-latest` via GenAI ListModels discovery.
+  - [x] Decoupled synchronous `chain.invoke()` from the main FastAPI event loop (removed `async def`) to guarantee `Ctrl+C` graceful OS signal termination. Added `make graphrag-backend-kill` to Makefile.
+  - [x] Hardened `make graphrag-backend-kill` to use `lsof -ti:8000 | xargs kill -9` because `--reload` watcher wrappers bypass string-based `pkill`.
+  - [x] Engineered flexible Search Prompting (`CYPHER_GENERATION_TEMPLATE`) to perform robust `OR` logic searches across Product, Scenario, and Category nodes simultaneously to solve zero-recall issues on fuzzy queries.
+  - [x] **[True GraphRAG Fix]**: Implemented Dynamic Graph Vocabulary Discovery in `backend/main.py`. Neo4j now passes distinct Category, Scenario, and Feature lists into the LLM `partial_variables` prompt to force precise Semantic Mapping, solving the '保護眼睛' mismatch issue.
+  - [x] Created `QA_GENERATION_PROMPT` to enforce enthusiastic Traditional Chinese responses and graceful fallbacks when context is empty.
+- [x] 7. Mass Data Engine (Performance Scale)
+  - [x] Extracted basic Python logic into High-Performance Generator (`generate_mass_data`), assembling dynamic prefix/feature permutations.
+  - [x] Implemented Neo4j `UNWIND` optimization batch queries (`insert_products_bulk`) to drastically reduce Database connection time.
+  - [x] Added `seed-large` CLI action to successfully inject exactly 100,000 nodes into Neo4j in just ~13 seconds without memory overflow or uniqueness collisions.

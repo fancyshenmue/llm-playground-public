@@ -1,0 +1,28 @@
+{
+    "project_settings": {
+        "persistence": "warm",
+        "indexing_strategy": "on_change"
+    },
+    "context_management": {
+        "auto_caching": true,
+        "priority_paths": [
+            ".agent/project_map.json",
+            ".agent/rules/rules.md",
+            "pixi.toml",
+            "documents/architecture/current-architecture.md",
+            "documents/electron/architecture.md",
+            "documents/electron/quant-analyst-implementation.md",
+            "documents/onyx/troubleshooting-guide.md",
+            "documents/onyx/README.md",
+            "documents/onyx/quick-start.md",
+            "documents/onyx/api-reference.md",
+            "documents/onyx/database-schema.md",
+            "documents/huggingface/setup.md",
+            "documents/huggingface/training-workflow.md",
+            "documents/quant/pinescript_v6_pitfalls.md",
+            "documents/quant/pinescript_v6_cheat_sheet.md",
+            "documents/quant/rag_architecture.md",
+            "documents/architecture/llm-utils-overview.md"
+        ]
+    }
+}
